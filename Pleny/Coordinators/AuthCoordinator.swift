@@ -7,7 +7,11 @@
 
 import SwiftUI
 
-class AuthCoordinator: ObservableObject {
+protocol AuthCoordinatorProtocol {
+    func login()
+}
+
+class AuthCoordinator: ObservableObject, AuthCoordinatorProtocol {
     @Published var isAuthenticated = false
     private let mainCoordinator: MainCoordinator
 
