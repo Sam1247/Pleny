@@ -10,16 +10,22 @@ import SwiftUI
 struct ProfileView: View {
     @ObservedObject var homeCoordinator: HomeCoordinator
 
+    
     var body: some View {
-        VStack {
-            Text("Profile Screen")
-                .font(.largeTitle)
+        VStack(spacing: 0) {
+            HeaderView()
+            ScrollView {
+                PostView(imagesPaths: [])
+                PostView(imagesPaths: ["postImage"])
+                PostView(imagesPaths: ["postImage", "postImage"])
+                PostView(imagesPaths: ["postImage", "postImage", "postImage"])
+                PostView(imagesPaths: ["postImage", "postImage", "postImage", "postImage", "postImage"])
 
-            Button("Back to Marketplace") {
-                homeCoordinator.showMarketplace()
+
             }
-            .padding()
+            Spacer()
         }
+        .ignoresSafeArea(edges: .bottom)
     }
 }
 

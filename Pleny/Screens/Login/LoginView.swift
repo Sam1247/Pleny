@@ -90,6 +90,9 @@ struct LoginView: View {
                     
                 }
             }
+            .alert(viewModel.errorMessage ?? "", isPresented: .constant(viewModel.errorMessage != nil)) {
+                Button("OK") { }
+            }
             .onAppear {
                 viewModel.authCoordinator = authCoordinator
             }

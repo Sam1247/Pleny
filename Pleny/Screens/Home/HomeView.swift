@@ -11,19 +11,18 @@ struct HomeView: View {
     @ObservedObject var homeCoordinator: HomeCoordinator
 
     var body: some View {
-        VStack {
-            Text("Home Screen")
-                .font(.largeTitle)
+        VStack(spacing: 0) {
+            HeaderView()
+            ScrollView {
+                PostView(imagesPaths: [])
+                PostView(imagesPaths: ["postImage"])
+                PostView(imagesPaths: ["postImage", "postImage"])
+                PostView(imagesPaths: ["postImage", "postImage", "postImage"])
+                PostView(imagesPaths: ["postImage", "postImage", "postImage", "postImage", "postImage"])
 
-            Button("Go to Profile") {
-                homeCoordinator.showProfile()
-            }
-            .padding()
 
-            Button("Go to Gallery") {
-                homeCoordinator.showGallery()
             }
-            .padding()
+            Spacer()
         }
     }
 }
