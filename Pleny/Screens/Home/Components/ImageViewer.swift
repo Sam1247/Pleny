@@ -37,7 +37,7 @@ struct ImageViewer: View {
                         .tag(index)
                 }
             }
-            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: images.count > 1 ? .always: .never))
         }
         .offset(offset)
         .gesture(

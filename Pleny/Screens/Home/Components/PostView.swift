@@ -8,8 +8,15 @@
 import SwiftUI
 
 struct PostView: View {
+//    private enum ViewerMode {
+//        case profile
+//        case gallery
+//    }
+//    
+//    @State private var mode: ViewerMode = .gallery
     let imagesPaths: [String]
-    @State private var showViewer = false
+    @State private var showGalleryViewer = false
+    @State private var showProfileImageViewer = false
     @State private var selectedImageIndex: Int = 0
     private let post: Post
     
@@ -19,10 +26,22 @@ struct PostView: View {
         self.post = post
     }
     
+    private func showGallery(with index: Int) {
+        selectedImageIndex = index
+        showGalleryViewer.toggle()
+    }
+    
+    private func showProfileImage() {
+        showProfileImageViewer.toggle()
+    }
+    
     var body: some View {
         VStack(spacing: 8) {
             HStack {
                 Image("profile")
+                    .onTapGesture {
+                        showProfileImage()
+                    }
                 VStack(alignment: .leading) {
                     Text("Neama Ahmed")
                         .font(.system(size: 17, weight: .medium))
@@ -37,6 +56,7 @@ struct PostView: View {
                 .font(.system(size: 17, weight: .regular))
                 .foregroundStyle(Constants.Colors.textColor)
                 .padding(.horizontal)
+
             if imagesPaths.count == 1 {
                 Image(imagesPaths[0])
                     .resizable()
@@ -44,8 +64,7 @@ struct PostView: View {
                     .frame(width: Constants.screenWidth - 36)
                     .cornerRadius(8)
                     .onTapGesture {
-                        selectedImageIndex = 0
-                        showViewer.toggle()
+                        showGallery(with: 0)
                     }
             } else if imagesPaths.count == 2 {
                 HStack(spacing: 3) {
@@ -56,11 +75,10 @@ struct PostView: View {
                         .cornerRadius(8, corners: .topLeft)
                         .cornerRadius(8, corners: .bottomLeft)
                         .onTapGesture {
-                            selectedImageIndex = 0
-                            showViewer.toggle()
+                            showGallery(with: 0)
                         }
-
-
+                    
+                    
                     Image(imagesPaths[0])
                         .resizable()
                         .scaledToFill()
@@ -68,11 +86,10 @@ struct PostView: View {
                         .cornerRadius(8, corners: .topRight)
                         .cornerRadius(8, corners: .bottomRight)
                         .onTapGesture {
-                            selectedImageIndex = 1
-                            showViewer.toggle()
+                            showGallery(with: 1)
                         }
-
-
+                    
+                    
                 }
             } else if imagesPaths.count == 3 {
                 HStack(spacing: 3) {
@@ -83,11 +100,10 @@ struct PostView: View {
                         .cornerRadius(8, corners: .topLeft)
                         .cornerRadius(8, corners: .bottomLeft)
                         .onTapGesture {
-                            selectedImageIndex = 0
-                            showViewer.toggle()
+                            showGallery(with: 0)
                         }
-
-
+                    
+                    
                     VStack(spacing: 3) {
                         Image(imagesPaths[0])
                             .resizable()
@@ -95,25 +111,23 @@ struct PostView: View {
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
                             .onTapGesture {
-                                selectedImageIndex = 1
-                                showViewer.toggle()
+                                showGallery(with: 1)
                             }
-
+                        
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomRight)
                             .onTapGesture {
-                                selectedImageIndex = 2
-                                showViewer.toggle()
+                                showGallery(with: 2)
                             }
-
+                        
                     }
-
-
+                    
+                    
                 }
-
+                
             } else if imagesPaths.count == 4 {
                 HStack(spacing: 3) {
                     
@@ -124,23 +138,21 @@ struct PostView: View {
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topLeft)
                             .onTapGesture {
-                                selectedImageIndex = 0
-                                showViewer.toggle()
+                                showGallery(with: 0)
                             }
-
+                        
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomLeft)
                             .onTapGesture {
-                                selectedImageIndex = 1
-                                showViewer.toggle()
+                                showGallery(with: 1)
                             }
-
+                        
                     }
-
-
+                    
+                    
                     VStack(spacing: 3) {
                         Image(imagesPaths[0])
                             .resizable()
@@ -148,23 +160,21 @@ struct PostView: View {
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
                             .onTapGesture {
-                                selectedImageIndex = 2
-                                showViewer.toggle()
+                                showGallery(with: 2)
                             }
-
+                        
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomRight)
                             .onTapGesture {
-                                selectedImageIndex = 3
-                                showViewer.toggle()
+                                showGallery(with: 3)
                             }
-
+                        
                     }
                 }
-
+                
             } else if imagesPaths.count > 4 {
                 HStack(spacing: 3) {
                     
@@ -175,23 +185,21 @@ struct PostView: View {
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topLeft)
                             .onTapGesture {
-                                selectedImageIndex = 0
-                                showViewer.toggle()
+                                showGallery(with: 0)
                             }
-
+                        
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomLeft)
                             .onTapGesture {
-                                selectedImageIndex = 1
-                                showViewer.toggle()
+                                showGallery(with: 1)
                             }
-
+                        
                     }
-
-
+                    
+                    
                     VStack(spacing: 3) {
                         Image(imagesPaths[0])
                             .resizable()
@@ -199,10 +207,9 @@ struct PostView: View {
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
                             .onTapGesture {
-                                selectedImageIndex = 2
-                                showViewer.toggle()
+                                showGallery(with: 2)
                             }
-
+                        
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
@@ -218,24 +225,26 @@ struct PostView: View {
                             }
                             .cornerRadius(8, corners: .bottomRight)
                             .onTapGesture {
-                                selectedImageIndex = 3
-                                showViewer.toggle()
+                                showGallery(with: 3)
                             }
-
+                        
                     }
                 }
-
+                
             }
             
             Rectangle()
                 .frame(height: 1)
                 .foregroundStyle(Constants.Colors.separatorColor)
                 .padding(.top, 6)
-
+            
         }
         .padding(.top)
-        .fullScreenCover(isPresented: $showViewer) {
-            ImageViewer(images: imagesPaths, currentIndex: $selectedImageIndex)
+        .fullScreenCover(isPresented: $showGalleryViewer) {
+                ImageViewer(images: imagesPaths, currentIndex: $selectedImageIndex)
+        }
+        .fullScreenCover(isPresented: $showProfileImageViewer) {
+            ImageViewer(images: ["profile"], currentIndex: .constant(0))
         }
 
     }

@@ -37,6 +37,7 @@ class HomeViewModel: ObservableObject {
     private func bindToSeachQuery() {
         isLoading = true
         $searchQuery
+            .dropFirst()
             .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .compactMap { [weak self] searchQuery in
                 self?.postService.fetchPosts(limit: 10, skip: (self?.currentPage ?? 0) * 10, search: searchQuery)

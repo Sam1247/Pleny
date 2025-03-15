@@ -37,9 +37,6 @@ struct HeaderView: View {
                     }
                     .scaleEffect(searching ? 0: 1)
                     .animation(.spring(), value: searching)
-                    
-                    
-                    
                 }
                 
                 ZStack {
