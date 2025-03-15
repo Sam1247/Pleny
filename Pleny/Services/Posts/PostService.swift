@@ -9,19 +9,20 @@ import Combine
 import Foundation
 
 protocol PostServiceProtocol {
-    func fetchPosts(limit: Int, skip: Int) -> AnyPublisher<PostsResponse, Error>
+    func fetchPosts(limit: Int, skip: Int, search: String) -> AnyPublisher<PostsResponse, Error>
 }
 
 class PostService: PostServiceProtocol {
     static let shared = PostService()
     
-    private let baseURL = "https://dummyjson.com/posts"
+    private let baseURL = "https://dummyjson.com/posts/search"
     
     private init() {}
     
-    func fetchPosts(limit: Int, skip: Int) -> AnyPublisher<PostsResponse, Error> {
+    func fetchPosts(limit: Int, skip: Int, search: String) -> AnyPublisher<PostsResponse, Error> {
         var urlComponents = URLComponents(string: baseURL)!
         urlComponents.queryItems = [
+            URLQueryItem(name: "q", value: "\(search)"),
             URLQueryItem(name: "limit", value: "\(limit)"),
             URLQueryItem(name: "skip", value: "\(skip)"),
         ]

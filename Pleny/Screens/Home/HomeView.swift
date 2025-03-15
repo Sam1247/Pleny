@@ -13,7 +13,7 @@ struct HomeView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            HeaderView()
+            HeaderView(searchQuery: $viewModel.searchQuery)
             if viewModel.isLoading {
                 ProgressView()
                     .progressViewStyle(CircularProgressViewStyle())

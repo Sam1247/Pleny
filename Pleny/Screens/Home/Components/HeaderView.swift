@@ -9,7 +9,7 @@ import SwiftUI
 
 struct HeaderView: View {
     @State var searching: Bool = true
-    @State var searchQuery: String = ""
+    @Binding var searchQuery: String
     enum FocusedField {
         case searchQuery
     }
@@ -58,6 +58,7 @@ struct HeaderView: View {
                         .onTapGesture {
                             searching.toggle()
                             focusedField = nil
+                            searchQuery = ""
                         }
                 }
             }
