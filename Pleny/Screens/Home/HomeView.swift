@@ -9,20 +9,25 @@ import SwiftUI
 
 struct HomeView: View {
     @ObservedObject var homeCoordinator: HomeCoordinator
-
+    @ObservedObject private var viewModel: HomeViewModel = HomeViewModel()
+    
     var body: some View {
         VStack(spacing: 0) {
             HeaderView()
-            ScrollView {
-                PostView(imagesPaths: [])
-                PostView(imagesPaths: ["postImage"])
-                PostView(imagesPaths: ["postImage", "postImage"])
-                PostView(imagesPaths: ["postImage", "postImage", "postImage"])
-                PostView(imagesPaths: ["postImage", "postImage", "postImage", "postImage", "postImage"])
-
-
+            if viewModel.isLoading {
+                ProgressView()
+                    .progressViewStyle(CircularProgressViewStyle())
+                    .padding(.top)
+            } else {
+                List(viewModel.posts, id: \.id) { post in
+                    PostView(post: post)
+                        .listRowInsets(EdgeInsets())
+                }
+                .listStyle(PlainListStyle()) 
             }
             Spacer()
+        }.onAppear {
+            viewModel.fetchPosts()
         }
     }
 }

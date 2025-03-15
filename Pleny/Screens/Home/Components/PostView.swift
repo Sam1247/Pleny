@@ -9,6 +9,16 @@ import SwiftUI
 
 struct PostView: View {
     let imagesPaths: [String]
+    @State private var showViewer = false
+    @State private var selectedImageIndex: Int = 0
+    private let post: Post
+    
+    init(post: Post) {
+        let random = Int.random(in: 0...5)
+        imagesPaths = [String](repeating: "postImage", count: random)
+        self.post = post
+    }
+    
     var body: some View {
         VStack(spacing: 8) {
             HStack {
@@ -23,7 +33,7 @@ struct PostView: View {
                 Spacer()
             }
             .padding(.horizontal)
-            Text("Craving something delicious? Try our new dish - a savory mix of roasted vegetables and quinoa, topped with a zesty garlic. Yum!")
+            Text(post.body)
                 .font(.system(size: 17, weight: .regular))
                 .foregroundStyle(Constants.Colors.textColor)
                 .padding(.horizontal)
@@ -33,6 +43,10 @@ struct PostView: View {
                     .scaledToFill()
                     .frame(width: Constants.screenWidth - 36)
                     .cornerRadius(8)
+                    .onTapGesture {
+                        selectedImageIndex = 0
+                        showViewer.toggle()
+                    }
             } else if imagesPaths.count == 2 {
                 HStack(spacing: 3) {
                     Image(imagesPaths[0])
@@ -41,6 +55,10 @@ struct PostView: View {
                         .frame(width: (Constants.screenWidth - 36) / 2, height: 343)
                         .cornerRadius(8, corners: .topLeft)
                         .cornerRadius(8, corners: .bottomLeft)
+                        .onTapGesture {
+                            selectedImageIndex = 0
+                            showViewer.toggle()
+                        }
 
 
                     Image(imagesPaths[0])
@@ -49,6 +67,10 @@ struct PostView: View {
                         .frame(width: (Constants.screenWidth - 36) / 2, height: 343)
                         .cornerRadius(8, corners: .topRight)
                         .cornerRadius(8, corners: .bottomRight)
+                        .onTapGesture {
+                            selectedImageIndex = 1
+                            showViewer.toggle()
+                        }
 
 
                 }
@@ -60,6 +82,10 @@ struct PostView: View {
                         .frame(width: (Constants.screenWidth - 36) / 2, height: 343)
                         .cornerRadius(8, corners: .topLeft)
                         .cornerRadius(8, corners: .bottomLeft)
+                        .onTapGesture {
+                            selectedImageIndex = 0
+                            showViewer.toggle()
+                        }
 
 
                     VStack(spacing: 3) {
@@ -68,12 +94,20 @@ struct PostView: View {
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
-                        
+                            .onTapGesture {
+                                selectedImageIndex = 1
+                                showViewer.toggle()
+                            }
+
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomRight)
+                            .onTapGesture {
+                                selectedImageIndex = 2
+                                showViewer.toggle()
+                            }
 
                     }
 
@@ -81,7 +115,7 @@ struct PostView: View {
                 }
 
             } else if imagesPaths.count == 4 {
-                HStack {
+                HStack(spacing: 3) {
                     
                     VStack(spacing: 3) {
                         Image(imagesPaths[0])
@@ -89,12 +123,20 @@ struct PostView: View {
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topLeft)
-                        
+                            .onTapGesture {
+                                selectedImageIndex = 0
+                                showViewer.toggle()
+                            }
+
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomLeft)
+                            .onTapGesture {
+                                selectedImageIndex = 1
+                                showViewer.toggle()
+                            }
 
                     }
 
@@ -105,12 +147,20 @@ struct PostView: View {
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
-                        
+                            .onTapGesture {
+                                selectedImageIndex = 2
+                                showViewer.toggle()
+                            }
+
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomRight)
+                            .onTapGesture {
+                                selectedImageIndex = 3
+                                showViewer.toggle()
+                            }
 
                     }
                 }
@@ -124,12 +174,20 @@ struct PostView: View {
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topLeft)
-                        
+                            .onTapGesture {
+                                selectedImageIndex = 0
+                                showViewer.toggle()
+                            }
+
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .bottomLeft)
+                            .onTapGesture {
+                                selectedImageIndex = 1
+                                showViewer.toggle()
+                            }
 
                     }
 
@@ -140,7 +198,11 @@ struct PostView: View {
                             .scaledToFill()
                             .frame(width: (Constants.screenWidth - 36) / 2, height: 343 / 2 - 1.5)
                             .cornerRadius(8, corners: .topRight)
-                        
+                            .onTapGesture {
+                                selectedImageIndex = 2
+                                showViewer.toggle()
+                            }
+
                         Image(imagesPaths[0])
                             .resizable()
                             .scaledToFill()
@@ -155,7 +217,10 @@ struct PostView: View {
                                 }
                             }
                             .cornerRadius(8, corners: .bottomRight)
-
+                            .onTapGesture {
+                                selectedImageIndex = 3
+                                showViewer.toggle()
+                            }
 
                     }
                 }
@@ -167,7 +232,12 @@ struct PostView: View {
                 .foregroundStyle(Constants.Colors.separatorColor)
                 .padding(.top, 6)
 
-        }.padding(.top)
+        }
+        .padding(.top)
+        .fullScreenCover(isPresented: $showViewer) {
+            ImageViewer(images: imagesPaths, currentIndex: $selectedImageIndex)
+        }
+
     }
 }
 

@@ -15,11 +15,6 @@ struct ProfileView: View {
         VStack(spacing: 0) {
             HeaderView()
             ScrollView {
-                PostView(imagesPaths: [])
-                PostView(imagesPaths: ["postImage"])
-                PostView(imagesPaths: ["postImage", "postImage"])
-                PostView(imagesPaths: ["postImage", "postImage", "postImage"])
-                PostView(imagesPaths: ["postImage", "postImage", "postImage", "postImage", "postImage"])
 
 
             }

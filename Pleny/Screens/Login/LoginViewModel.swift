@@ -38,7 +38,8 @@ class LoginViewModel: ObservableObject {
         
         loginService.login(username: username, password: password)
             .receive(on: DispatchQueue.main)
-            .sink(receiveCompletion: { completion in
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self else { return }
                 switch completion {
                 case .finished:
                     break
@@ -46,7 +47,9 @@ class LoginViewModel: ObservableObject {
                     self.errorMessage = error.localizedDescription
                 }
                 self.isLoading = false
-            }, receiveValue: { response in
+
+            }, receiveValue: { [weak self] response in
+                guard let self else { return }
                 print("Login Successful! Token: \(response.accessToken)")
                 self.authCoordinator?.login()
             })
