@@ -19,7 +19,7 @@ class PostService: PostServiceProtocol {
     
     private init() {}
     
-    func fetchPosts(limit: Int = 10, skip: Int = 0) -> AnyPublisher<PostsResponse, Error> {
+    func fetchPosts(limit: Int, skip: Int) -> AnyPublisher<PostsResponse, Error> {
         var urlComponents = URLComponents(string: baseURL)!
         urlComponents.queryItems = [
             URLQueryItem(name: "limit", value: "\(limit)"),

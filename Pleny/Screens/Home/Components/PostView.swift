@@ -14,8 +14,8 @@ struct PostView: View {
     private let post: Post
     
     init(post: Post) {
-        let random = Int.random(in: 0...5)
-        imagesPaths = [String](repeating: "postImage", count: random)
+        let imageCount = post.views % 6
+        imagesPaths = [String](repeating: "postImage", count: imageCount)
         self.post = post
     }
     

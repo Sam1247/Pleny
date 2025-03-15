@@ -19,11 +19,19 @@ struct HomeView: View {
                     .progressViewStyle(CircularProgressViewStyle())
                     .padding(.top)
             } else {
-                List(viewModel.posts, id: \.id) { post in
-                    PostView(post: post)
-                        .listRowInsets(EdgeInsets())
+                List {
+                    ForEach(viewModel.posts, id: \.id) { post in
+                        PostView(post: post)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets())
+                            .onAppear {
+                                if viewModel.posts.last?.id == post.id {
+                                    viewModel.loadMorePosts()
+                                }
+                            }
+                    }
                 }
-                .listStyle(PlainListStyle()) 
+                .listStyle(PlainListStyle())
             }
             Spacer()
         }.onAppear {
