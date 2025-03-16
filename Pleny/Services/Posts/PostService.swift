@@ -35,6 +35,15 @@ class PostService: PostServiceProtocol {
         request.httpMethod = "GET"
         
         return URLSession.shared.dataTaskPublisher(for: request)
+            .tryMap { output in
+                // Check the HTTP status code here
+                if let httpResponse = output.response as? HTTPURLResponse,
+                   (200...299).contains(httpResponse.statusCode) {
+                    return output
+                } else {
+                    throw URLError(.badServerResponse)
+                }
+            }
             .map(\.data)
             .decode(type: PostsResponse.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
