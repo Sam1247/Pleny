@@ -9,12 +9,7 @@ import Combine
 import Foundation
 
 class HomeViewModel: ObservableObject {
-    private var cancellables: Set<AnyCancellable> = []
-    private var postService: PostServiceProtocol
-    private var currentPage = 0
-    
     @Published var posts: [Post] = []
-        
     @Published var isLoading = false
     @Published var morePostsIsLoading = false
     @Published var searchQuery: String = "" {
@@ -24,13 +19,17 @@ class HomeViewModel: ObservableObject {
             posts.removeAll()
         }
     }
-    
     @Published var errorMessage: String? = nil
     @Published var hasMorePosts: Bool = false
+
+    private var cancellables: Set<AnyCancellable> = []
+    private var postService: PostServiceProtocol
+    private var postsRepository: PostRepositoryProtocol
+    private var currentPage = 0
     
-    
-    init(postService: PostServiceProtocol = PostService.shared) {
+    init(postService: PostServiceProtocol = PostService.shared, postsRepository: PostRepositoryProtocol = CoreDataPostRepository()) {
         self.postService = postService
+        self.postsRepository = postsRepository
         bindToSeachQuery()
     }
     
@@ -63,11 +62,8 @@ class HomeViewModel: ObservableObject {
             .store(in: &cancellables)
     }
     
-    func fetchPosts() {
-        isLoading = true
-        errorMessage = nil
-        
-        postService.fetchPosts(limit: 10, skip: 0, search: searchQuery)
+    private func fetchLocalPosts() {
+        postsRepository.fetchPosts()
             .receive(on: DispatchQueue.main)
             .sink(receiveCompletion: { [weak self] completion in
                 guard let self else { return }
@@ -81,7 +77,32 @@ class HomeViewModel: ObservableObject {
                 self.isLoading = false
             }, receiveValue: { [weak self] response in
                 guard let self else { return }
+                self.posts =  response
+            })
+            .store(in: &cancellables)
+    }
+    
+    func fetchPosts() {
+        isLoading = true
+        errorMessage = nil
+        
+        postService.fetchPosts(limit: 10, skip: 0, search: searchQuery)
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] completion in
+                guard let self else { return }
+                switch completion {
+                case .finished:
+                    break
+                case .failure(let error):
+                    self.errorMessage = error.localizedDescription
+                    fetchLocalPosts()
+                    break
+                }
+                self.isLoading = false
+            }, receiveValue: { [weak self] response in
+                guard let self else { return }
                 self.posts =  response.posts
+                postsRepository.savePosts(posts: response.posts)
                 self.currentPage += 1
                 self.hasMorePosts = posts.count < response.total
             })
